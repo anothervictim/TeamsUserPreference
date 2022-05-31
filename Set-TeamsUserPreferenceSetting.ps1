@@ -22,18 +22,18 @@ function Set-TeamsUserPreferenceSetting {
         [String]$PreferenceValue,
 
         [Parameter(Mandatory=$false)]
-        [String]$jsonfile = $(Join-Path $env:AppData 'Microsoft\Teams\desktop-config.json'),
-
-        [Parameter(Mandatory=$false)]
-        [String]$User = $(Join-Path $env:USERDOMAIN $env:USERNAME),
-
-        [Parameter(Mandatory=$false)]
         [ValidateSet(
             'True',
             'False'
             )
         ]
-        [String]$Reset = 'False'
+        [String]$Reset = 'False',
+
+        [Parameter(Mandatory=$false)]
+        [String]$jsonfile = $(Join-Path $env:AppData 'Microsoft\Teams\desktop-config.json'),
+
+        [Parameter(Mandatory=$false)]
+        [String]$User = $(Join-Path $env:USERDOMAIN $env:USERNAME)
     )
     
     Write-Verbose ($jsonfile)
