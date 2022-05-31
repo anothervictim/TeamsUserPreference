@@ -1,4 +1,4 @@
-function Get-TeamsUserPreferenceSetting {
+function Set-TeamsUserPreferenceSetting {
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$True)]
@@ -23,15 +23,17 @@ function Get-TeamsUserPreferenceSetting {
 
         [Parameter(Mandatory=$false)]
         [String]$jsonfile = $(Join-Path $env:AppData 'Microsoft\Teams\desktop-config.json'),
+
         [Parameter(Mandatory=$false)]
         [String]$User = $(Join-Path $env:USERDOMAIN $env:USERNAME),
+
         [Parameter(Mandatory=$false)]
-        [ValidationSet(
+        [ValidateSet(
             'True',
             'False'
             )
         ]
-        [String]$TeamsReset = $false
+        [String]$Reset = 'False'
     )
     
     Write-Verbose ($jsonfile)
@@ -41,7 +43,7 @@ function Get-TeamsUserPreferenceSetting {
         # Terminate running process for user
         $Process = Get-Process -Name 'Teams' -IncludeUserName -ErrorAction SilentlyContinue |
             Where-Object UserName -eq $User
-        if ($Process -and $TeamsReset -eq $True) {
+        if ($Process -and $Reset -eq $True) {
             $Killed = Stop-Process -Name $($Process.Name) -Force -PassThru
         }
 
